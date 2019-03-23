@@ -7,7 +7,7 @@
     android:layout_height="100dp">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/img_card_person"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -34,7 +34,7 @@
         app:layout_constraintVertical_bias="1.0"></LinearLayout>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_card_person_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -43,11 +43,11 @@
         android:text="احمدی نژاد"
         android:textStyle="bold"
         android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/img_card_person"
+        app:layout_constraintEnd_toStartOf="@+id/img_card_person"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/img_card_person"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -58,15 +58,15 @@
         android:layout_marginEnd="24dp"
         android:text="تعداد پرونده:"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/img_card_person"
+        app:layout_constraintEnd_toStartOf="@+id/img_card_person"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/img_card_person"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_card_document_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
