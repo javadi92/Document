@@ -1,6 +1,8 @@
 package database;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -9,17 +11,17 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DBName="document.db";
     private static int DBVersion=1;
 
-    private static DBHelper instance;
+    private static DBHelper instance=null;
 
-    public static synchronized DBHelper getsInstance(Context context){
+    /*public static synchronized DBHelper getsInstance(Context context){
         if(instance==null){
             instance=new DBHelper(context.getApplicationContext());
         }
         return instance;
-    }
+    }*/
 
 
-    private DBHelper(Context context) {
+    public DBHelper(Context context) {
         super(context, DBName, null, DBVersion);
     }
 
@@ -48,5 +50,37 @@ public class DBHelper extends SQLiteOpenHelper {
         }finally {
             db.endTransaction();
         }
+    }
+
+    public Cursor getPersons(){
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor cursor=null;
+        try {
+            cursor=db.rawQuery("SELECT * FROM "+ DBC.PersonsTable.PersonsTableName,null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return cursor;
+    }
+
+    public Cursor personsGetData(String id){
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor cursor=null;
+        try{
+            cursor=db.rawQuery("SELECT * FROM "+DBC.PersonsTable.PersonsTableName+" WHERE "+
+                    DBC.PersonsTable.Id+"='"+id+"'",null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return cursor;
+    }
+
+    public long personsInsert(String personName,String documentNumber,String personImage){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(DBC.PersonsTable.PersonName,personName);
+        contentValues.put(DBC.PersonsTable.DocumentNumber,documentNumber);
+        contentValues.put(DBC.PersonsTable.PersonImage,personImage);
+        return db.insert(DBC.PersonsTable.PersonsTableName,null,contentValues);
     }
 }
