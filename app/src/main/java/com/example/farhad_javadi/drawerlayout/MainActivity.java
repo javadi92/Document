@@ -12,8 +12,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import adapter.PersonsAdapter;
@@ -47,11 +45,11 @@ public class MainActivity extends AppCompatActivity {
         imgPersonsAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"Add button in persons clicked",Toast.LENGTH_LONG).show();
                 AlertDialog dialog;
                 AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
                 final EditText editText=new EditText(MainActivity.this);
-                builder.setTitle("انتخاب نام");
+                editText.setGravity(Gravity.RIGHT);
+                editText.setHint("نام شخص را وراد کنید");
                 builder.setPositiveButton("تایید", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -60,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     });
+                builder.setNegativeButton("لغو", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
                 builder.setView(editText);
                 dialog=builder.create();
                 dialog.show();
