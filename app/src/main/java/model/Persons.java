@@ -4,7 +4,7 @@ public class Persons {
 
     private String personName;
     private  int documentNumber;
-    private int personImage;
+    private byte[] personImage;
 
     public String getPersonName() {
         return personName;
@@ -22,11 +22,11 @@ public class Persons {
         this.documentNumber = documentNumber;
     }
 
-    public int getPersonImage() {
+    public byte[] getPersonImage() {
         return personImage;
     }
 
-    public void setPersonImage(int personImage) {
+    public void setPersonImage(byte[] personImage) {
         this.personImage = personImage;
     }
 }

@@ -33,7 +33,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     " ("+DBC.PersonsTable.Id+" INTEGER PRIMARY key AUTOINCREMENT,"+
                     DBC.PersonsTable.PersonName+" TEXT NOT NULL,"+
                     DBC.PersonsTable.DocumentNumber+" INTEGER,"+
-                    DBC.PersonsTable.PersonImage+" INTEGER)");
+                    DBC.PersonsTable.PersonImage+" BLOB)");
             db.setTransactionSuccessful();
         }finally {
             db.endTransaction();
@@ -75,7 +75,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public long personsInsert(String personName,String documentNumber,String personImage){
+    public long personsInsert(String personName,String documentNumber,byte[] personImage){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
         contentValues.put(DBC.PersonsTable.PersonName,personName);

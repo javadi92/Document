@@ -1,6 +1,9 @@
 package adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,6 +36,9 @@ public class PersonsAdapter extends RecyclerView.Adapter<PersonsAdapter.viewHold
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         holder.tvPersonName.setText(list.get(position).getPersonName());
         holder.tvDocumentNumber.setText(list.get(position).getDocumentNumber()+"");
+        byte[] bitmapdata=list.get(position).getPersonImage();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+        holder.imgPerson.setImageBitmap(bitmap);
     }
 
     @Override
@@ -49,6 +55,7 @@ public class PersonsAdapter extends RecyclerView.Adapter<PersonsAdapter.viewHold
             super(itemView);
             tvPersonName=(TextView)itemView.findViewById(R.id.tv_card_person_name);
             tvDocumentNumber=(TextView)itemView.findViewById(R.id.tv_card_document_number);
+            imgPerson=(ImageView)itemView.findViewById(R.id.img_card_person);
         }
     }
 }
