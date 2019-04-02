@@ -2,9 +2,6 @@ package com.example.farhad_javadi.drawerlayout;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.widget.DrawerLayout;
@@ -19,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -78,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                dbHelper.personsInsert(etPersonName.getText().toString(),"0",inputData);
+                App.dbHelper.personsInsert(etPersonName.getText().toString(),"0",inputData);
                 populatePersonsRecyclerView();
                 dialog.dismiss();
             }
@@ -90,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager llm=new LinearLayoutManager(MainActivity.this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerViewPersons.setLayoutManager(llm);
-        dbHelper=new DBHelper(MainActivity.this);
+        //dbHelper=new DBHelper(MainActivity.this);
         populatePersonsRecyclerView();
 
         imgPersonsAdd=(ImageView)findViewById(R.id.img_persons_page_add);
@@ -120,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void populatePersonsRecyclerView(){
         personsList.clear();
-        Cursor cursor=dbHelper.getPersons();
+        Cursor cursor=App.dbHelper.getPersons();
         if(cursor.moveToFirst()){
             do{
                 Persons persons=new Persons();

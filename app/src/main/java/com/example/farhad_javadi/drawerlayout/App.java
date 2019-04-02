@@ -6,11 +6,11 @@ import database.DBHelper;
 
 public class App extends Application {
 
-    /*public static DBHelper dbHelper;
+    public static DBHelper dbHelper;
 
     @Override
     public void onCreate() {
         super.onCreate();
         dbHelper=DBHelper.getsInstance(this);
-    }*/
+    }
 }

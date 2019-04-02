@@ -13,12 +13,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static DBHelper instance=null;
 
-    /*public static synchronized DBHelper getsInstance(Context context){
+    public static synchronized DBHelper getsInstance(Context context){
         if(instance==null){
             instance=new DBHelper(context.getApplicationContext());
         }
         return instance;
-    }*/
+    }
 
 
     public DBHelper(Context context) {
