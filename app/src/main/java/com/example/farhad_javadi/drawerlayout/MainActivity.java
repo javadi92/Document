@@ -28,6 +28,7 @@ import model.Persons;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static int id;
     ImageView imgDrawerMenu,imgPersonsAdd,imgPersonSelect;
     DrawerLayout drawerLayout;
     RecyclerView recyclerViewPersons;
@@ -111,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void populatePersonsRecyclerView(){
@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         if(cursor.moveToFirst()){
             do{
                 Persons persons=new Persons();
+                persons.setId(cursor.getInt(0));
                 persons.setPersonName(cursor.getString(1));
                 persons.setDocumentNumber(cursor.getInt(2));
                 byte[] imgByte = cursor.getBlob(3);
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
     private void openGallery(){
         Intent gallery=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery,imagePickUp);
+        startActivity(gallery);
     }
 
     @Override
@@ -151,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
         byte[] buffer = new byte[bufferSize];
-
         int len = 0;
         while ((len = inputStream.read(buffer)) != -1) {
             byteBuffer.write(buffer, 0, len);

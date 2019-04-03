@@ -1,9 +1,9 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,14 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.farhad_javadi.drawerlayout.MainActivity;
 import com.example.farhad_javadi.drawerlayout.R;
 import java.util.List;
+import activities.Person;
 import model.Persons;
+
 
 public class PersonsAdapter extends RecyclerView.Adapter<PersonsAdapter.viewHolder> {
 
     private List<Persons> list;
     private Context mContext;
+    public static int id;
 
     public PersonsAdapter(Context context,List<Persons> list){
         this.mContext=context;
@@ -33,12 +39,21 @@ public class PersonsAdapter extends RecyclerView.Adapter<PersonsAdapter.viewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull viewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull viewHolder holder, final int position) {
         holder.tvPersonName.setText(list.get(position).getPersonName());
         holder.tvDocumentNumber.setText(list.get(position).getDocumentNumber()+"");
         byte[] bitmapdata=list.get(position).getPersonImage();
         Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
         holder.imgPerson.setImageBitmap(bitmap);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, Person.class);
+                MainActivity.id =list.get(position).getId();
+                Toast.makeText(mContext,id+"",Toast.LENGTH_SHORT).show();
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

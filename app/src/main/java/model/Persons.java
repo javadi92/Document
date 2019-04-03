@@ -2,9 +2,18 @@ package model;
 
 public class Persons {
 
+    private int id;
     private String personName;
     private  int documentNumber;
     private byte[] personImage;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getPersonName() {
         return personName;
