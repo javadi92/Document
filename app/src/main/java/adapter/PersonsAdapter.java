@@ -50,7 +50,6 @@ public class PersonsAdapter extends RecyclerView.Adapter<PersonsAdapter.viewHold
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, Person.class);
                 MainActivity.id =list.get(position).getId();
-                Toast.makeText(mContext,id+"",Toast.LENGTH_SHORT).show();
                 mContext.startActivity(intent);
             }
         });

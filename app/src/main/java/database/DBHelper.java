@@ -10,7 +10,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DBName="document.db";
     private static int DBVersion=1;
-
     private static DBHelper instance=null;
 
     public static synchronized DBHelper getsInstance(Context context){
@@ -25,6 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DBName, null, DBVersion);
     }
 
+    //create database
     @Override
     public void onCreate(SQLiteDatabase db) {
         try{
@@ -40,6 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    //Upgrade database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try{
@@ -52,6 +53,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    //Get all persons
     public Cursor getPersons(){
         SQLiteDatabase db=this.getReadableDatabase();
         Cursor cursor=null;
@@ -63,7 +65,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor personsGetData(String id){
+    //Get certain person with id number
+    public Cursor personsGetDataById(String id){
         SQLiteDatabase db=this.getReadableDatabase();
         Cursor cursor=null;
         try{
@@ -75,6 +78,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    //Get certain person with person name
+    public Cursor personsGetDataByName(String name){
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor cursor=null;
+        try{
+            cursor=db.rawQuery("SELECT * FROM "+DBC.PersonsTable.PersonsTableName+" WHERE "+
+                    DBC.PersonsTable.PersonName+"='"+name+"'",null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return cursor;
+    }
+
+    //Insert data
     public long personsInsert(String personName,String documentNumber,byte[] personImage){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();

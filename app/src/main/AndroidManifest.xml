@@ -20,6 +20,9 @@
         <activity android:name="activities.Person">
 
         </activity>
+        <activity android:name="activities.PersonSearch">
+
+        </activity>
     </application>
 
 </manifest>

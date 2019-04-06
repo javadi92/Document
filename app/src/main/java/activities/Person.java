@@ -7,12 +7,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.farhad_javadi.drawerlayout.App;
 import com.example.farhad_javadi.drawerlayout.MainActivity;
 import com.example.farhad_javadi.drawerlayout.R;
 
-import adapter.PersonsAdapter;
 
 public class Person extends AppCompatActivity {
 
@@ -28,7 +26,7 @@ public class Person extends AppCompatActivity {
         tvPersonName=(TextView)findViewById(R.id.tv_person);
         tvDocumentNumber=(TextView)findViewById(R.id.tv_document_number);
 
-        Cursor cursor=App.dbHelper.personsGetData(MainActivity.id+"");
+        Cursor cursor=App.dbHelper.personsGetDataById(MainActivity.id+"");
         if(cursor.moveToFirst()){
             do{
                 tvPersonName.setText(cursor.getString(1));
