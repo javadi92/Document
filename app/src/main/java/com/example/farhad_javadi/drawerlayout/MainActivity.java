@@ -1,8 +1,10 @@
 package com.example.farhad_javadi.drawerlayout;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.widget.DrawerLayout;
@@ -20,14 +22,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import activities.PersonSearch;
 import adapter.PersonsAdapter;
 import database.DBHelper;
@@ -36,7 +36,7 @@ import model.Persons;
 public class MainActivity extends AppCompatActivity {
 
     public static int id;
-    ImageView imgDrawerMenu,imgPersonsAdd,imgPersonSelect,imgPersonSearch;
+    ImageView imgDrawerMenu,imgPersonsAdd,imgPersonSearch,imgPersonSelect;
     DrawerLayout drawerLayout;
     RecyclerView recyclerViewPersons;
     PersonsAdapter personsAdapter;
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     private void openGallery(){
         Intent gallery=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery,imagePickUp);
-        startActivity(gallery);
+        //startActivity(gallery);
     }
 
     @Override
@@ -139,27 +139,42 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnConfirmAlertDialog.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
-                InputStream iStream = null;
-                byte[] inputData=null;
-                try {
-                    iStream = getContentResolver().openInputStream(uri);
-                    inputData = getBytes(iStream);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if(etPersonName.getText().toString().equals("")){
+                    Toast.makeText(MainActivity.this,"نام شخص نمیتواند خالی باشد",Toast.LENGTH_LONG).show();
                 }
-                App.dbHelper.personsInsert(etPersonName.getText().toString(),"0",inputData);
-                populatePersonsRecyclerView();
-                dialog.dismiss();
+                else {
+                    InputStream iStream = null;
+                    byte[] inputData=null;
+                    try {
+                        if(uri!=null){
+                            iStream = getContentResolver().openInputStream(uri);
+                            inputData = getBytes(iStream);
+                            App.dbHelper.personsInsert(etPersonName.getText().toString(),"0",inputData);
+                        }
+                        else {
+                            iStream=MainActivity.this.getResources().openRawResource(R.drawable.profile);
+                            inputData = getBytes(iStream);
+                            App.dbHelper.personsInsert(etPersonName.getText().toString(),"0",inputData);
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    populatePersonsRecyclerView();
+                    uri=null;
+                    dialog.dismiss();
+                }
             }
         });
 
         imgPersonsAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                etPersonName.setText("");
                 imgPersonSelect.setImageResource(R.drawable.profile);
                 dialog.setView(view);
                 dialog.show();
