@@ -2,6 +2,7 @@ package database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -12,6 +13,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static int DBVersion=1;
     private static DBHelper instance=null;
 
+    //singelton method to access database from other activity
     public static synchronized DBHelper getsInstance(Context context){
         if(instance==null){
             instance=new DBHelper(context.getApplicationContext());
@@ -99,5 +101,11 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(DBC.PersonsTable.DocumentNumber,documentNumber);
         contentValues.put(DBC.PersonsTable.PersonImage,personImage);
         return db.insert(DBC.PersonsTable.PersonsTableName,null,contentValues);
+    }
+
+    //delete data
+    public Integer deleteData(int id){
+        SQLiteDatabase db=this.getWritableDatabase();
+        return db.delete(DBC.PersonsTable.PersonsTableName,DBC.PersonsTable.Id+"=?",new String[]{String.valueOf(id)});
     }
 }

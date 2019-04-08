@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +31,7 @@ import java.util.List;
 import activities.PersonSearch;
 import adapter.PersonsAdapter;
 import database.DBHelper;
-import model.Persons;
+import model.PersonsModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerViewPersons;
     PersonsAdapter personsAdapter;
     EditText etPersonName;
-    DBHelper dbHelper;
-    List<Persons> personsList=new ArrayList<>();
+    public static Toolbar toolbar;
+    List<PersonsModel> personsList=new ArrayList<>();
     Button btnImageSelectAlertDilog,btnConfirmAlertDialog;
     private static final int imagePickUp=100;
     private static Uri uri=null;
@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewPersons=(RecyclerView)findViewById(R.id.recy_person_search_page);
         imgPersonsAdd=(ImageView)findViewById(R.id.img_persons_page_add);
         imgDrawerMenu=(ImageView) findViewById(R.id.img_menu);
+        toolbar=(Toolbar)findViewById(R.id.toolbar_persons_page);
+
+        setSupportActionBar(toolbar);
 
         //settings for recyclerview
         LinearLayoutManager llm=new LinearLayoutManager(MainActivity.this);
@@ -81,19 +84,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //update recyclerview
-    private void populatePersonsRecyclerView(){
+    public  void populatePersonsRecyclerView(){
         personsList.clear();
         Cursor cursor=App.dbHelper.getPersons();
         if(cursor.moveToFirst()){
             do{
-                Persons persons=new Persons();
+                PersonsModel persons=new PersonsModel();
                 persons.setId(cursor.getInt(0));
                 persons.setPersonName(cursor.getString(1));
                 persons.setDocumentNumber(cursor.getInt(2));
                 byte[] imgByte = cursor.getBlob(3);
                 persons.setPersonImage(imgByte);
                 personsList.add(persons);
-                namesList.add(cursor.getString(1));
+                //to avoid create duplicate value
+                if(!namesList.contains(cursor.getString(1))){
+                    namesList.add(cursor.getString(1));
+                }
             }while (cursor.moveToNext());
         }
         personsAdapter=new PersonsAdapter(MainActivity.this,personsList);
@@ -104,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
     private void openGallery(){
         Intent gallery=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery,imagePickUp);
-        //startActivity(gallery);
     }
 
     @Override
